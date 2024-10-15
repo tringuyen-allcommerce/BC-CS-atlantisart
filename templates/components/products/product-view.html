@@ -128,7 +128,13 @@
                                     {{> components/yotpo/ratings id=product.id show_write=true}}
                                 {{/if}}
                             </div>
-
+                            <div class="productView-description-customize">
+                                <h2 class="_head" {{#if schema}} itemprop="description"{{/if}}>{{lang 'products.description'}}:</h2>
+                                <div class="_content">
+                                    {{{product.description}}}
+                                    {{{snippet 'product_description'}}}
+                                </div>
+                            </div>
                             <div class="productView-price">
                                 {{#if product.call_for_price}}
                                     <span class="price--call">{{product.call_for_price}}</span>
@@ -461,6 +467,7 @@
 
     <div data-also-bought-parent-scope class="productView-descriptionWrapper">
         <article class="productView-description">
+            {{!--
             <div class="tab-content is-active" id="tab-description">
                 {{#unless in_quickview}}<div class="container">{{/unless}}
                 <h2 class="beautify__page-heading _hasToggle">{{lang 'products.description'}}</h2>
@@ -474,6 +481,7 @@
                 </div>
                 {{#unless in_quickview}}</div><!-- .container -->{{/unless}}
             </div>
+            --}}
             {{#if product.videos.list.length}}
                 <div class="tab-content" id="tab-videos">
                     {{#unless in_quickview}}<div class="container">{{/unless}}
