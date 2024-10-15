@@ -1,0 +1,11 @@
+.productView-description-customize {
+    ._head {
+        margin: 0 0 spacing("half");
+        font-size: fontSize("large");
+        font-weight: fontWeight("semibold");
+    }
+
+    p {
+        margin-bottom: spacing("quarter");
+    }
+}
