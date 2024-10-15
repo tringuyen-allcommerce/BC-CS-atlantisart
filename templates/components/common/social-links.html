@@ -1,0 +1,33 @@
+{{#if social_media}}
+    <ul class="socialLinks {{#if style}}socialLinks--{{style}}{{/if}}">
+        {{#each social_media}}
+            {{#if display_name '===' 'twitter'}}
+                <li class="socialLinks-item">
+                    <a class="icon icon--x"
+                    href="{{url}}"
+                    target="_blank"
+                    rel="noopener"
+                    title="X"
+                    >
+                        <svg>
+                            <use href="#icon-x"/>
+                        </svg>
+                    </a>
+                </li>
+            {{else}}
+                <li class="socialLinks-item">
+                    <a class="icon icon--{{display_name}}"
+                    href="{{url}}"
+                    target="_blank"
+                    rel="noopener"
+                    title="{{{capitalize display_name}}}"
+                    >
+                        <svg>
+                            <use href="#icon-{{display_name}}2"/>
+                        </svg>
+                    </a>
+                </li>
+            {{/if}}
+        {{/each}}
+    </ul>
+{{/if}}

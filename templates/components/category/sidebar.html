@@ -1,0 +1,34 @@
+<nav>
+    {{#if theme_settings.layout '===' 'left-sidebar'}}
+        {{> components/supermarket/sidebar/categories-menu}}
+    {{/if}}
+    
+    {{#if category.subcategories}}
+    <div class="sidebarBlock sidebarBlock--categories sidebarBlock--mobileCollapsible">
+        <h3 class="sidebarBlock-heading is-open" data-collapsible="#categories-navList" tabindex="0" aria-expanded="true">
+            {{category.name}}
+            <svg class="icon"><use xlink:href="#icon-keyboard-arrow-down"></use></svg>
+        </h3>
+        <ul id="categories-navList" class="beautify__navList is-open" aria-hidden="false">
+            {{#each category.subcategories}}
+            <li class="navList-item">
+                <a class="navList-action" data-instantload href="{{url}}" title="{{name}}">{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+
+    {{#if category.faceted_search_enabled}}
+        {{> components/faceted-search/index category}}
+    {{else}}
+        {{#if theme_settings.show_shop_by_price '!=' 'hide'}}
+            {{> components/category/shop-by-price shop_by_price=category.shop_by_price category_url=category.url}}
+        {{/if}}
+        {{#if shop_by_brand}}
+            {{#if theme_settings.sidebar_shop_by_brand '>' 9}}
+                {{> components/supermarket/sidebar/brands}}
+            {{/if}}
+        {{/if}}
+    {{/if}}
+</nav>

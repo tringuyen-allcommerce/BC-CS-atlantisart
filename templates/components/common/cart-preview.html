@@ -1,0 +1,144 @@
+<div class="previewCart" data-cart-quantity="{{cart.quantity}}">
+    <div class="_header">
+        <a href="#" class="_close is-open" data-toggle="cart-preview-dropdown"><svg class="icon"><use xlink:href="#icon-close"></use></svg><span class="sr-only">{{lang 'common.close'}}</span></a>
+        <h2 class="_heading">
+            {{lang 'cart.label' quantity=cart.quantity}}
+            <a href="{{urls.cart}}">{{lang 'cart.preview.edit_cart'}}</a>
+        </h2>
+        {{#if cart.status_messages.length '>' 0}}
+            <div class="_statusMsg">
+                {{#each cart.status_messages}}
+                    <div class="alertBox alertBox--info">
+                        <div class="alertBox-column alertBox-message">
+                            {{{message}}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+        {{#if in_development}}
+            <div class="_statusMsg">
+                <div class="alertBox alertBox--info">
+                    <div class="alertBox-column alertBox-message">
+                        📦 Free shipping over 59 Euro - Code: IRISH
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <div class="_body">
+        {{#if cart.items.length}}
+            <ul class="previewCartList">
+                {{#each cart.items}}
+                    <li class="previewCartItem" data-cart-itemid="{{id}}">
+                        <div class="previewCartItem-image">
+                            {{#if type '==' 'GiftCertificate'}}
+                                <img src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
+                            {{else}}
+                                {{> components/common/responsive-img
+                                    image=image
+                                    fallback_size=../../theme_settings.productthumb_size
+                                    lazyload=../../theme_settings.lazyload_mode
+                                    default_image=../../theme_settings.default_image_product
+                                }}
+                            {{/if}}
+                        </div>
+
+                        <div class="previewCartItem-content">
+                            {{#if can_modify}}
+                            <span class="previewCartItem-remove">
+                                <a class="previewCartItem-remove-icon" title="{{lang 'cart.remove'}}" data-cart-remove data-cart-itemid="{{id}}" href="#" data-confirm-delete="{{lang 'cart.confirm_delete'}}" aria-autoclose="false">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </span>
+                            {{/if}}
+                            
+                            <h6 class="previewCartItem-name">
+                                <a href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
+                            </h6>
+
+                            {{!-- inhealth: hide brand 
+                            <span class="previewCartItem-brand">
+                                {{brand.name}}
+                            </span>
+                            --}}
+
+                            {{!-- beautify hide SKU
+                            {{#if sku}}
+                                <dl class="definitionList definitionList--previewCartItem">
+                                    <dt class="definitionList-key">{{lang 'products.sku'}}</dt>
+                                    <dd class="definitionList-value">{{sku}}</dd>
+                                </dl>
+                            {{/if}}
+                            --}}
+
+                            <span class="previewCartItem-price">
+                                {{#if quantity '>' 1}}
+                                    {{quantity}} &times;
+                                {{/if}}
+                                {{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}
+                                    <span{{#if price_discounted}} class="price--discounted"{{/if}}>{{price.formatted}}</span>
+                                    {{#if price_discounted}}
+                                        {{price_discounted.formatted}}
+                                    {{/if}}
+                                {{else}}
+                                    {{> components/common/login-for-pricing}}
+                                {{/or}}
+                            </span>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+        {{else}}
+            <div class="previewCart-emptyBody">
+                {{lang 'cart.checkout.empty_cart'}}
+            </div>
+        {{/if}}
+    </div>
+    {{#if cart.items.length}}
+        <div class="_footer">
+            <div class="previewCartAction">
+                <ul class="previewCartAction-totals">
+                    <li class="cart-total cart-total--subtotal">
+                        <div class="cart-total-label">
+                            {{lang 'cart.checkout.subtotal'}}
+                        </div>
+                        <div class="cart-total-value">
+                            {{#or customer (unless settings.hide_price_from_guests)}}
+                                <span>{{cart.sub_total.formatted}}</span>
+                            {{else}}
+                                {{> components/common/login-for-pricing}}
+                            {{/or}}
+                        </div>
+                    </li>
+                </ul>
+                
+                {{#if cart.show_primary_checkout_button}}
+                    <div class="previewCartAction-checkout">
+                        <a href="{{urls.checkout.single_address}}" class="button button--primary">
+                            <svg class="icon"><use xlink:href="#icon-lock"></use></svg>{{lang 'cart.preview.checkout_now'}}
+                        </a>
+                    </div>
+                {{/if}}
+
+                {{#if cart.show_multiple_address_shipping}}
+                    <div class="previewCartAction-checkoutMultiple">
+                        <a href="{{urls.checkout.multiple_address}}">
+                            {{lang 'cart.preview.checkout_multiple'}}
+                        </a>
+                    </div>
+                {{/if}}
+            </div>
+            {{#if cart.additional_checkout_buttons}}
+                <div class="previewCart-additionalCheckoutButtons">
+                    <div class="_heading">{{lang 'cart.checkout.or'}}</div>
+                    {{#each cart.additional_checkout_buttons}}
+                        <div class="_item">
+                            {{{this}}}
+                        </div>
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+    {{/if}}
+</div>

@@ -1,0 +1,72 @@
+---
+cart: true
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+shop_by_brand:
+    limit: {{theme_settings.sidebar_shop_by_brand}}
+---
+{{inject 'cancelButtonText' (lang 'common.cancel')}}
+{{#partial "page"}}
+{{inject 'invalidEntryMessage' (lang 'cart.invalid_entry_message')}}
+<div class="page">
+
+    {{#if theme_settings.layout '===' 'left-sidebar'}}
+    <div class="page-sidebar">
+        {{> components/supermarket/home/sidebar}}
+    </div>
+    {{/if}}
+
+    <main class="page-content" data-cart>
+        {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+        
+        {{> components/cart/page-title}}
+        
+        <div data-cart-status>
+            {{> components/cart/status-messages}}
+            {{#if in_development}}
+                <div class="cart-status">
+                    <div class="alertBox alertBox--info">
+                        <div class="alertBox-column alertBox-message">
+                            📦 Free shipping over 59 Euro - Code: IRISH
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+
+        {{{region name="cart_below_header"}}}
+
+        <div class="loadingOverlay"></div>
+
+        {{#if cart.items.length}}
+            <div class="beautify__cart">
+                <div class="_left">
+                    <div class="cart-contentWrapper" data-cart-content>
+                        {{> components/cart/content}}
+                    </div>
+                    {{{region name="cart_content"}}}
+                </div>
+                <div class="_right">
+                    <div class="cart-totalsWrapper" data-cart-totals>
+                        {{> components/cart/totals}}
+                    </div>
+
+                    {{{region name="cart_below_totals"}}}
+        
+
+                    {{{region name="cart_below_checkout_button"}}}
+                </div>
+            </div>
+        {{else}}
+            <h3 class="cart-emptyText">{{lang 'cart.checkout.empty_cart'}}</h3>
+            {{{region name="cart_content_empty"}}}
+        {{/if}}
+
+        {{{snippet 'cart'}}}
+
+        {{{region name="cart_bottom"}}}
+    </main>
+</div>
+{{/partial}}
+{{> layout/base}}

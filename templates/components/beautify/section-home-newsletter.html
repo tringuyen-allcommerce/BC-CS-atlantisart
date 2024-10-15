@@ -1,0 +1,31 @@
+{{#if settings.show_newsletter_box}}
+    <div class="beautify__section {{#if index}}beautify__section--index{{index}}{{/if}} beautify__newsletter">
+        {{#if theme_settings.footer-secondary-backgroundImg '==' 'cosmetics'}}
+            {{> components/common/responsive-img-url image=(cdn 'img/beautify/cosmetic-newsletter-bg.jpg') alt=(lang 'newsletter.subscribe') class="_bgImg"}}
+        {{else if theme_settings.footer-secondary-backgroundImg '==' 'custom'}}
+            {{#if theme_settings.footer-secondary-backgroundImgFile}}
+                {{> components/common/responsive-img-url image=(getImageManagerImage theme_settings.footer-secondary-backgroundImgFile) alt=(lang 'newsletter.subscribe') class="_bgImg"}}
+            {{/if}}
+        {{/if}}
+        <div class="container">
+            <h2 class="page-heading">{{theme_settings.newsletter_heading}}</h2>
+            {{#if settings.show_newsletter_summary}}
+                {{#if settings.newsletter_summary}}
+                    <p>{{{settings.newsletter_summary}}}</p>
+                {{/if}}
+            {{/if}}
+            <form class="form" action="{{urls.subscribe.action}}" method="post">
+                <fieldset class="form-fieldset">
+                    <input type="hidden" name="action" value="subscribe">
+                    <input type="hidden" name="nl_first_name" value="bc">
+                    <input type="hidden" name="check" value="1">
+                    <div class="form-field">
+                        <label class="form-label is-srOnly" for="nl_email">{{lang 'common.email_address'}}</label>
+                        <input class="form-input" id="nl_email" name="nl_email" type="email" value="{{customer.email}}" placeholder="{{lang 'newsletter.email_placeholder'}}">
+                        <button class="button" type="submit">{{lang 'newsletter.subscribe_submit'}}</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{{/if}}

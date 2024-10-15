@@ -1,0 +1,66 @@
+---
+product:
+    videos:
+        limit: {{theme_settings.productpage_videos_count}}
+    reviews:
+        limit: {{theme_settings.productpage_reviews_count}}
+    related_products:
+        limit: {{theme_settings.productpage_related_products_count}}
+    similar_by_views:
+        limit: {{theme_settings.productpage_similar_by_views_count}}
+shop_by_brand:
+    limit: {{theme_settings.sidebar_shop_by_brand}}
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+---
+{{#partial "hero"}}
+
+    {{#if theme_settings.layout '===' 'left-sidebar'}}
+        <div class="page">
+            <div class="page-sidebar">
+                {{> components/supermarket/home/sidebar}}
+            </div>
+            <main class="page-content">
+    {{/if}}
+
+    <div class="beautify__productPage-top">
+        <div class="container">
+            {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+            {{#each product.shipping_messages}}
+                {{> components/common/alert-info message}}
+            {{/each}}
+        </div><!-- .container -->
+    </div>
+
+    <div itemscope itemtype="https://schema.org/Product" class="productView-scope">
+        {{> components/products/product-view schema=true}}
+
+        <div class="container">
+            {{{region name="product_below_content--global"}}}
+            {{{region name="product_below_content"}}}
+        </div><!-- .container -->
+    </div>
+
+    <div class="container">
+        {{#if theme_settings.show_yotpo}}
+            {{> components/yotpo/main-widget}}
+        {{/if}}
+    </div><!-- .container -->
+        
+    <div class="productView-productTabs">
+        {{> components/products/tabs}}
+    </div>
+
+    {{#if theme_settings.layout '===' 'left-sidebar'}}
+            </main><!-- .page-content -->
+        </div><!-- .page -->
+    {{/if}}
+{{/partial}}
+{{#and theme_settings.instantload is_ajax}}
+    {{> layout/instantload-base}}
+{{else}}
+    {{> layout/base}}
+{{/and}}
+
